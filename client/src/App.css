@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+.header {
+  display: flex;
+  min-height: 15vh;
+  background-color: #D1462F;
+}
+
+.main {
+  display: flex;
+  min-height: 70vh;
+  background-color: #E3C567;
+}
+
+.footer {
+  display: flex;
+  min-height: 15vh;
+  background-color: #C8963E;
+}
