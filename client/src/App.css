@@ -10,18 +10,67 @@ body {
 
 .header {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
   min-height: 15vh;
   background-color: #D1462F;
 }
 
 .main {
   display: flex;
+  justify-content: center;
   min-height: 70vh;
+  padding: 1rem;
   background-color: #E3C567;
 }
 
 .footer {
   display: flex;
   min-height: 15vh;
+  padding: 1rem;
   background-color: #C8963E;
 }
+
+.site-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.food-selector {
+  display: flex;
+  flex-flow: column wrap;
+  gap: 1rem;
+}
+
+/* .food-selector > div {
+  border: 1px solid gray;
+} */
+
+.select-container {
+  display: grid;
+}
+
+select {
+  padding: 0.25rem;
+}
+
+input {
+  padding: 0.5rem;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 1rem auto;
+}
+
+table caption {
+  margin: 1rem;
+}
+
+table th,
+td {
+  padding: 0.25rem 0.5rem;
+  text-align: center;
+}
+

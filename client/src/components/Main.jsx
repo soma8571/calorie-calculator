@@ -1,9 +1,10 @@
 import React from 'react';
+import FoodSelector from './FoodSelector';
 
 function Main() {
   return (
     <div className='main'>
-      Main
+      <FoodSelector />
     </div>
   )
 }
