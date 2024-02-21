@@ -1,6 +1,6 @@
 export const foods = [
    {
-     id: 0,
+     id: 1,
      name: "csirkemell",
      protein: 22.5,
      carbohydrate: 0,
@@ -8,7 +8,7 @@ export const foods = [
      calories: 120,
    },
    {
-     id: 1,
+     id: 2,
      name: "rizs",
      protein: 6,
      carbohydrate: 72,
@@ -16,7 +16,7 @@ export const foods = [
      calories: 320,
    },
    {
-     id: 2,
+     id: 3,
      name: "édesburgonya",
      protein: 1.5,
      carbohydrate: 17.1,
