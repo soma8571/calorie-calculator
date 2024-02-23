@@ -62,6 +62,10 @@ function FoodSelector() {
       return summaryRow;
    }
 
+   function deleteFood(e) {
+      console.log(e.target.dataset.id);
+   }
+
    function renderConsumedFoods() {
       const consumedFoodsRows = consumedFoods.map((food, ind) => 
          <tr key={ind}>
@@ -70,6 +74,14 @@ function FoodSelector() {
             <td>{food.fat} g</td>
             <td>{food.carbohydrate} g</td>
             <td>{food.calories} kc</td>
+            <td>
+               <button 
+                  onClick={e=>deleteFood(e)}
+                  data-id={food.id}
+               >
+                  Törlés
+               </button>
+            </td>
          </tr>
       );
       consumedFoodsRows.push(summarizeMacros());
