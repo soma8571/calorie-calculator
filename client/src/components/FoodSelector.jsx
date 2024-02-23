@@ -63,7 +63,10 @@ function FoodSelector() {
    }
 
    function deleteFood(e) {
-      console.log(e.target.dataset.id);
+      const toBeDeleted = e.target.dataset.id; 
+      console.log(toBeDeleted);
+      const filtered = consumedFoods.filter(food => food.id !== Number(toBeDeleted));
+      setConsumedFoods(filtered);
    }
 
    function renderConsumedFoods() {
