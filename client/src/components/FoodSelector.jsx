@@ -1,11 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import { foods } from '../nutritions-data';
+import Button from '@mui/material/Button';
+import Slider from '@mui/material/Slider';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+//import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
 
 function FoodSelector() {
 
    const [selectedFood, setSelectedFood] = useState("");
    const [consumedFoods, setConsumedFoods] = useState([]);
-   const [consumedQuantity, setConsumedQuantity] = useState(0);
+   const [consumedQuantity, setConsumedQuantity] = useState(50);
 
    useEffect(() => {
       if (selectedFood !== "") console.log(selectedFood);
@@ -17,11 +24,11 @@ function FoodSelector() {
 
    function renderNutritionOptions() {
       let options = [];
-      options.push(<option key="empty" value=""></option>);
+      options.push(<MenuItem key="empty" value=""></MenuItem>);
       const realOptions = foods.map((food, ind) => (
-         <option key={ind} value={food.id}>
-         {food.name}
-         </option>
+         <MenuItem key={ind} value={food.id}>
+            {food.name}
+         </MenuItem>
       ));
       options.push(...realOptions);
       return options;
@@ -43,6 +50,8 @@ function FoodSelector() {
 
    //amikor több elfogyasztott ételünk is van, akkor összesíteni kell ezek makrotápanyag értékeit
    function summarizeMacros() {
+      let sumQuantity = consumedFoods.reduce((sum, current) => 
+      sum + Number(current.consumed), 0);
       let sumProtein = consumedFoods.reduce((sum, current) => 
          sum + Number(current.protein), 0);
       let sumFat = consumedFoods.reduce((sum, current) => 
@@ -54,6 +63,7 @@ function FoodSelector() {
       const summaryRow = 
          <tr key="summary" className='summary'>
             <td>Összesen:</td>
+            <td>{sumQuantity.toFixed(1)} g</td>
             <td>{sumProtein.toFixed(1)} g</td>
             <td>{sumFat.toFixed(1)} g</td>
             <td>{sumCh.toFixed(1)} g</td>
@@ -73,17 +83,20 @@ function FoodSelector() {
       const consumedFoodsRows = consumedFoods.map((food, ind) => 
          <tr key={ind}>
             <td>{food.name}</td>
+            <td>{food.consumed}</td>
             <td>{food.protein} g</td>
             <td>{food.fat} g</td>
             <td>{food.carbohydrate} g</td>
             <td>{food.calories} kc</td>
             <td>
-               <button 
+               <Button 
+                  variant="contained" 
+                  color="error"
                   onClick={e=>deleteFood(e)}
                   data-id={food.id}
                >
                   Törlés
-               </button>
+               </Button>
             </td>
          </tr>
       );
@@ -96,14 +109,17 @@ function FoodSelector() {
       if (consumedQuantity > 0) {
          const temp = foods.filter(item => item.id === Number(selectedFood));
          const selectedFoodObj = temp[0];
-         const consumedFoodObj = {...selectedFoodObj};
+         const consumedFoodObj = {
+            ...selectedFoodObj, 
+            consumed: consumedQuantity,
+         };
          for (let key in consumedFoodObj) {
-            if (key !== "id" && key !== "name") {
+            if (key !== "id" && key !== "name" && key !== "consumed") {
                consumedFoodObj[key] = (consumedFoodObj[key] * (consumedQuantity /100)).toFixed(1);
             }
          }
          setConsumedFoods(prev => [...prev, consumedFoodObj]);
-         setConsumedQuantity(0);
+         setConsumedQuantity(50);
       }
    }
 
@@ -111,13 +127,14 @@ function FoodSelector() {
       <div className="food-selector">
          <div className="select-container">
             <h2>Étel kiválasztása</h2>
-            <select
+            <Select
                id="nutritionSelect"
                value={selectedFood}
                onChange={(e) => setSelectedFood(e.target.value)}
+               label="Étel"
             >
                {renderNutritionOptions()}
-            </select>
+            </Select>
          </div>
 
          <div className="nutrition-data">
@@ -141,17 +158,34 @@ function FoodSelector() {
             {selectedFood !== "" && (
                <>
                <h2>Add meg az ételből elfogyasztott mennyiséget grammban</h2>
-               <form onSubmit={e=>handleSubmit(e)}>
-                  <input 
-                     type="number" 
-                     name="quantity" 
-                     id="quantity" 
-                     placeholder='Mennyiség (g)'
+               <form>
+                  <TextField
+                     id="outlined-number"
+                     label="Mennyiség"
+                     type="number"
+                     InputLabelProps={{
+                        shrink: true,
+                     }}
                      value={consumedQuantity}
                      onChange={e=>setConsumedQuantity(e.target.value)}
-                     required
                   />
-                  <input type="submit" value="Fogyasztottam" />
+                  <Slider 
+                     aria-label="Consumed quantity" 
+                     value={consumedQuantity} 
+                     onChange={e=>setConsumedQuantity(e.target.value)}
+                     min={1}
+                     max={300}
+                     valueLabelDisplay="auto"
+                  />
+                  <div>
+                  <Button 
+                     variant='contained'
+                     onClick={e=>handleSubmit(e)}
+                  >
+                     Fogyasztottam
+                  </Button>
+                  </div>
+                  
                </form>
                </>)
             }
@@ -166,6 +200,7 @@ function FoodSelector() {
                   <thead>
                      <tr>
                         <th>Étel neve</th>
+                        <th>Elfogy. menny.</th>
                         <th>Fehérje</th>
                         <th>Zsír</th>
                         <th>Szénhidrát</th>
