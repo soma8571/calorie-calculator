@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 //import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import MealDisplay from './MealDisplay';
 
 
 function FoodSelector() {
@@ -46,62 +47,6 @@ function FoodSelector() {
             </tr>
          ));
       return dataCells;
-   }
-
-   //amikor több elfogyasztott ételünk is van, akkor összesíteni kell ezek makrotápanyag értékeit
-   function summarizeMacros() {
-      let sumQuantity = consumedFoods.reduce((sum, current) => 
-      sum + Number(current.consumed), 0);
-      let sumProtein = consumedFoods.reduce((sum, current) => 
-         sum + Number(current.protein), 0);
-      let sumFat = consumedFoods.reduce((sum, current) => 
-         sum + Number(current.fat), 0);
-      let sumCh = consumedFoods.reduce((sum, current) => 
-         sum + Number(current.carbohydrate), 0);
-      let sumCal = consumedFoods.reduce((sum, current) => 
-         sum + Number(current.calories), 0);
-      const summaryRow = 
-         <tr key="summary" className='summary'>
-            <td>Összesen:</td>
-            <td>{sumQuantity.toFixed(1)} g</td>
-            <td>{sumProtein.toFixed(1)} g</td>
-            <td>{sumFat.toFixed(1)} g</td>
-            <td>{sumCh.toFixed(1)} g</td>
-            <td>{sumCal.toFixed(1)} kc</td>
-         </tr>;
-      return summaryRow;
-   }
-
-   function deleteFood(e) {
-      const toBeDeleted = e.target.dataset.id; 
-      console.log(toBeDeleted);
-      const filtered = consumedFoods.filter(food => food.id !== Number(toBeDeleted));
-      setConsumedFoods(filtered);
-   }
-
-   function renderConsumedFoods() {
-      const consumedFoodsRows = consumedFoods.map((food, ind) => 
-         <tr key={ind}>
-            <td>{food.name}</td>
-            <td>{food.consumed}</td>
-            <td>{food.protein} g</td>
-            <td>{food.fat} g</td>
-            <td>{food.carbohydrate} g</td>
-            <td>{food.calories} kc</td>
-            <td>
-               <Button 
-                  variant="contained" 
-                  color="error"
-                  onClick={e=>deleteFood(e)}
-                  data-id={food.id}
-               >
-                  Törlés
-               </Button>
-            </td>
-         </tr>
-      );
-      consumedFoodsRows.push(summarizeMacros());
-      return consumedFoodsRows;
    }
 
    function handleSubmit(e) {
@@ -191,29 +136,10 @@ function FoodSelector() {
             }
          </div>
 
-         <div className="consumed-foods">
-            {consumedFoods.length > 0 ?
-               (<>
-               <h2>Az étkezés adatai</h2>
-               <table>
-                  <caption>Az elfogyasztott étel(ek) makrói</caption>
-                  <thead>
-                     <tr>
-                        <th>Étel neve</th>
-                        <th>Elfogy. menny.</th>
-                        <th>Fehérje</th>
-                        <th>Zsír</th>
-                        <th>Szénhidrát</th>
-                        <th>Kalória</th>
-                     </tr>
-                  </thead>
-                  <tbody>{renderConsumedFoods()}</tbody>
-               </table>
-               </>)
-               :
-               <p>Még nem adtál hozzá ételt!</p>
-            }
-         </div>
+         <MealDisplay 
+            meal={consumedFoods} 
+            setMeal={setConsumedFoods}
+         />
       </div>
    );
 }
