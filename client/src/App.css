@@ -10,11 +10,28 @@ body {
 
 .header {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   padding: 1rem;
   min-height: 15vh;
   background-color: #D1462F;
+}
+
+ul.main-nav {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+}
+
+ul.main-nav a {
+  text-decoration: none;
+  color: white;
+}
+
+ul.main-nav a:hover {
+  text-underline-offset: .5rem;
+  text-decoration-thickness: 5px;
+  text-decoration: underline;
 }
 
 .main {
@@ -116,5 +133,10 @@ h2 {
   font-size: 1.1rem;
   color:#D1462F;
   text-align: center;
+}
+
+.newfood > form {
+  display: grid;
+  gap: 1rem;
 }
 

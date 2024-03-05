@@ -1,7 +1,8 @@
 import './App.css';
 import FoodSelector from './components/FoodSelector.jsx';
 import Layout from './components/Layout.jsx';
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import {Routes, Route} from "react-router-dom";
+import NewFood from './components/NewFood.jsx';
 
 function App() {
   return (
@@ -12,8 +13,8 @@ function App() {
           element={<Layout content={<FoodSelector />} />}
         />
         <Route 
-          path="/"
-          element={<Layout content={<FoodSelector />} />}
+          path="uj-etel"
+          element={<Layout content={<NewFood />} />}
         />
       </Routes>
     </div>
