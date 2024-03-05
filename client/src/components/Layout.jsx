@@ -1,13 +1,16 @@
 import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
-import Main from './Main';
 
-function Layout() {
+function Layout( {content} ) {
   return (
     <div>
       <Header />
-      <Main />
+      <div className='main'>
+         <main>
+            {content}
+         </main>
+      </div>
       <Footer />
     </div>
   )
