@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import axios from "axios";
 
 function NewFood() {
 
@@ -12,26 +13,44 @@ function NewFood() {
     calories: 0,
   }
   const [food, setFood] = useState(foodStructure);
+  const [isSending, setIsSending] = useState(false);
 
   useEffect(()=>{
     console.log(food);
   }, [food])
+
+  async function saveFood() {
+    const url = ``;
+    setIsSending(true);
+    try {
+      /* const {data} = axios.post(url, food);
+      console.log(data.msg); */
+      console.log("Küldés");
+    } catch (err) {
+      console.log(err);
+    } finally {
+      
+      setTimeout(()=> setIsSending(false), 2000);
+    }
+  }
   
   const handleChange = (e) => {
     const {name, value} = e.target;
-    let temp = {...food, [name]: Number(value)}
-    //console.log(temp);
-    setFood(temp);
-
-    /* setFood(prev => {
-      return {...prev, [name]: Number(value)}
-    }); */
+    if (name === "food_name") {
+      setFood(prev => {
+        return {...prev, [name]: value}
+      });
+    } else {
+      setFood(prev => {
+        return {...prev, [name]: Number(value)}
+      });
+    }
+    
   }
   
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("ok");
-
+    saveFood();
   }
 
   return (
@@ -48,7 +67,7 @@ function NewFood() {
         <TextField
           required
           id="newfood-protein"
-          name="protein-content"
+          name="protein_content"
           label="Fehérje"
           type="number"
           InputLabelProps={{
@@ -60,7 +79,7 @@ function NewFood() {
         <TextField
           required
           id="newfood-fat"
-          name="fat-content"
+          name="fat_content"
           label="Zsír"
           type="number"
           InputLabelProps={{
@@ -72,7 +91,7 @@ function NewFood() {
         <TextField
           required
           id="newfood-ch"
-          name="ch-content"
+          name="ch_content"
           label="Szénhidrát"
           type="number"
           InputLabelProps={{
@@ -92,12 +111,16 @@ function NewFood() {
           value={food.calories}
           onChange={e=>handleChange(e)}
         />
-        <Button 
+        {isSending ? 
+          (<div>Az adatok mentése...</div>)
+          :
+          (<Button 
           variant='contained'
           type='submit'
-        >
-          Étel mentése
-        </Button>
+          >
+            Étel mentése
+          </Button>)
+        }
       </form>
     </div>
   )
