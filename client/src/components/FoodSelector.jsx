@@ -116,10 +116,10 @@ function FoodSelector() {
                   />
                   <Slider 
                      aria-label="Consumed quantity" 
-                     value={consumedQuantity} 
+                     value={Number(consumedQuantity)} 
                      onChange={e=>setConsumedQuantity(e.target.value)}
                      min={1}
-                     max={300}
+                     max={800}
                      valueLabelDisplay="auto"
                   />
                   <div>

@@ -5,7 +5,8 @@ require __DIR__."/src/common.php";
 $folder = "";
 if ($_SERVER['SERVER_NAME'] === "localhost") {
     header("Access-Control-Allow-Origin: http://localhost:3000");
-    $folder = "/calorie-calculator/calorie-calculator/";
+    //$folder = "/calorie-calculator/calorie-calculator/";
+    $folder = "/calorie-calculator/";
 } else {
     header("Access-Control-Allow-Origin: https://admin.boznanszkykes.hu");
     $folder = "/";
@@ -25,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) use ($folder) {
     
     //$r->addRoute('POST', $folder.'server/login', 'login');
+    $r->addRoute('GET', $folder.'server/index.php', 'home');
     $r->addRoute('GET', $folder.'server/test', 'test');
 });
 
@@ -50,26 +52,14 @@ switch ($routeInfo[0]) {
 }
 
 function home() {
-    //Termékek listája
     //auth();
     $pdo = getConnection();
-    $query = "SELECT DISTINCT id_knives, name, k.type, k.available, subcategory_name, price, pi.thumbnail_path, os.*, st.stock
-                FROM knives k 
-                    LEFT JOIN knives_subcategories ks
-                        ON k.type_subcategory = ks.idknives_subcategories
-                    LEFT JOIN product_images pi
-                        ON k.id_knives = pi.knives_id
-                    LEFT JOIN on_sale os
-                        ON k.id_knives = os.product_id
-                    LEFT JOIN store st
-                        ON k.id_knives = st.product_id
-                WHERE pi.profil = 1 OR pi.profil IS NULL
-                ORDER BY sale_percentage DESC, available DESC, stock DESC";
-    $statement = $pdo->prepare($query);
+    
+    /* $statement = $pdo->prepare($query);
     $statement->execute();
     $data = $statement->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode($data);
-    //echo json_encode(["msg" => "home lefut"]);
+    echo json_encode($data); */
+    echo json_encode(["msg" => "home lefut"]);
 
 }
 

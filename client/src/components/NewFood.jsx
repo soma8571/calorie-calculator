@@ -7,10 +7,10 @@ function NewFood() {
 
   const foodStructure = {
     food_name: "",
-    protein_content: 0,
-    fat_content: 0,
-    ch_content: 0,
-    calories: 0,
+    protein_content: "",
+    fat_content: "",
+    ch_content: "",
+    calories: "",
   }
   const [food, setFood] = useState(foodStructure);
   const [isSending, setIsSending] = useState(false);
@@ -20,11 +20,11 @@ function NewFood() {
   }, [food])
 
   async function saveFood() {
-    const url = ``;
+    const url = `${process.env.REACT_APP_API_URL}/test`;
     setIsSending(true);
     try {
-      /* const {data} = axios.post(url, food);
-      console.log(data.msg); */
+      const {data} = await axios.get(url, food);
+      console.log(data);
       console.log("Küldés");
     } catch (err) {
       console.log(err);
