@@ -5,8 +5,8 @@ require __DIR__."/src/common.php";
 $folder = "";
 if ($_SERVER['SERVER_NAME'] === "localhost") {
     header("Access-Control-Allow-Origin: http://localhost:3000");
-    $folder = "/calorie-calculator/calorie-calculator/";
-    //$folder = "/calorie-calculator/";
+    //$folder = "/calorie-calculator/calorie-calculator/";
+    $folder = "/calorie-calculator/";
 } else {
     header("Access-Control-Allow-Origin: https://admin.boznanszkykes.hu");
     $folder = "/";

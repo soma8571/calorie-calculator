@@ -55,6 +55,7 @@ function NewFood() {
 
   return (
     <div className='newfood'>
+      <h2>Új étel hozzáadása</h2>
       <form onSubmit={e=>handleSubmit(e)}>
         <TextField
           required
@@ -70,6 +71,7 @@ function NewFood() {
           name="protein_content"
           label="Fehérje"
           type="number"
+          min="10"
           InputLabelProps={{
             shrink: true,
           }}
