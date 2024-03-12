@@ -20,10 +20,10 @@ function NewFood() {
   }, [food])
 
   async function saveFood() {
-    const url = `${process.env.REACT_APP_API_URL}/test`;
+    const url = `${process.env.REACT_APP_API_URL}/newfood`;
     setIsSending(true);
     try {
-      const {data} = await axios.get(url, food);
+      const {data} = await axios.post(url, food);
       console.log(data);
       console.log("Küldés");
     } catch (err) {

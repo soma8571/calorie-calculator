@@ -5,8 +5,8 @@ require __DIR__."/src/common.php";
 $folder = "";
 if ($_SERVER['SERVER_NAME'] === "localhost") {
     header("Access-Control-Allow-Origin: http://localhost:3000");
-    //$folder = "/calorie-calculator/calorie-calculator/";
-    $folder = "/calorie-calculator/";
+    $folder = "/calorie-calculator/calorie-calculator/";
+    //$folder = "/calorie-calculator/";
 } else {
     header("Access-Control-Allow-Origin: https://admin.boznanszkykes.hu");
     $folder = "/";
@@ -28,6 +28,7 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
     //$r->addRoute('POST', $folder.'server/login', 'login');
     $r->addRoute('GET', $folder.'server/index.php', 'home');
     $r->addRoute('GET', $folder.'server/test', 'test');
+    $r->addRoute('POST', $folder.'server/newfood', 'newfood');
 });
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
